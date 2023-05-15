@@ -1,0 +1,29 @@
+﻿Use Master
+GO
+    IF exists(Select name From sys.databases Where name='DEMO' )
+    DROP Database DEMO
+GO
+	Create Database DEMO
+GO
+
+USE DEMO
+
+CREATE TABLE MEGA(
+	Name nvarchar(100) not null
+) 
+GO
+CREATE TABLE MegaSum(
+	Name nvarchar(100) not null
+) 
+GO
+CREATE TABLE Power(
+	Name nvarchar(100) not null
+) 
+GO
+CREATE TABLE PowerSum(
+	Name nvarchar(100) not null
+) 
+GO
+
+SELECT COUNT(Name),Name FROM Power GROUP BY Name HAVING COUNT(Name) > 0
+SELECT COUNT(Name),Name FROM PowerSum GROUP BY Name HAVING COUNT(Name) > 1

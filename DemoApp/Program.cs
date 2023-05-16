@@ -11,8 +11,9 @@ namespace DemoApp
     {
         static void Main(string[] args)
         {
-            Mega();
-            //Power();
+
+            //Mega();
+            Power();
         }
         static void Mega()
         {
@@ -21,6 +22,12 @@ namespace DemoApp
             using (StreamWriter sw = File.AppendText(path))
             {
                 sw.WriteLine("mega--------------------------->"+ DateTime.Now.ToString("yyyy-MM-dd hh:mm:ss"));
+            }
+            if (File.Exists(data))
+            {
+                File.Delete(data);
+                File.Delete(Sum);
+
             }
             // Read data from file into megaNumbers array
             string[,] megaNumbers = new string[10, 6];
@@ -102,33 +109,23 @@ namespace DemoApp
         static void Power()
         {
             // Specify a name for your top-level folder.
-            string path = @"C:\tmp\MyTest.txt"; string data = @"C:\tmp\data.txt"; string Sum = @"C:\tmp\sum.txt"; //string inputPower = @"C:\tmp\inputpower.txt";
+            string path = @"C:\tmp\MyTest.txt"; string data = @"C:\tmp\data.txt"; string Sum = @"C:\tmp\sum.txt"; string inputpower = @"C:\tmp\inputpower.txt";
             using (StreamWriter sw = File.AppendText(path))
             {
                 sw.WriteLine("Power--------------------------->" + DateTime.Now.ToString("yyyy-MM-dd hh:mm:ss"));
             }
 
-            string[,] Power = {
-                    { "02", "13", "16", "18", "41", "42" }, //#00808
-                    { "08", "23", "24", "48", "49", "52" }, //#00807
-                    { "04", "06", "18", "27", "52", "53" }, //#00806
-                    { "03", "09", "21", "22", "26", "35" }, //#00805
-                    { "03", "15", "22", "39", "46", "48" }, //#00804
-                    { "01", "19", "25", "27", "38", "42" }, //#00803
-                    { "04", "20", "26", "36", "47", "51" }, //#00802
-
-
-            };
-            string[,] Powerfetch = {
-                    { "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0" }, //[0, 0]
-                    { "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0" }, //[1, 0]
-                    { "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0" },
-                    { "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0" },
-                    { "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0" },
-                    { "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0" },
-                    { "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0" }
-
-            };
+            string[,] Power = new string[10, 6];
+            string[] lines = File.ReadAllLines(inputpower);
+            for (int i = 0; i < Power.GetLength(0); i++)
+            {
+                string[] numbers = lines[i].Split(' ');
+                for (int j = 0; j < Power.GetLength(1); j++)
+                {
+                    Power[i, j] = numbers[j].Trim();
+                }
+            }
+            string[,] Powerfetch = new string[10, 15]; // Increase size if needed
             int row = 0;
             for (int i = 0; i < Power.GetLength(0); i++)
             {
@@ -161,7 +158,6 @@ namespace DemoApp
                 }
                 //Console.WriteLine();
             }*/
-
             for (int i = 0; i < Powerfetch.GetLength(0); i++)
             {
                 for (int j = 0; j < Powerfetch.GetLength(1); j++)
@@ -174,10 +170,10 @@ namespace DemoApp
                             {
                                 sw.WriteLine("INSERT INTO PowerSum VALUES(N'" + Powerfetch[i, j] + Powerfetch[e, f] + "'); ");
                             }
-                            Console.Write(Powerfetch[i, j] + " " + Powerfetch[e, f] + "     ");
+                            //Console.Write(Powerfetch[i, j] + " " + Powerfetch[e, f] + "     ");
                             if (Powerfetch[i, j] == Powerfetch[e, f])
                             {
-                                //Console.Write(Powerfetch[i, j] + " " + Powerfetch[e, f] + "     ");
+                                Console.Write(Powerfetch[i, j] + " " + Powerfetch[e, f] + "     ");
                                 using (StreamWriter sw = File.AppendText(path))
                                 {
                                     sw.WriteLine(Powerfetch[i, j] + " " + Powerfetch[e, f]);
@@ -186,12 +182,13 @@ namespace DemoApp
                             //Console.Write(Powerfetch[i, j] + " " + Powerfetch[e, f] + "     ");
                         }
                         //Console.WriteLine();
-                        //Console.Write(Megafetch[i, j] + " " + Megafetch[e, j] + "     ");
+                        //Console.Write(Powerfetch[i, j] + " " + Powerfetch[e, j] + "     ");
                     }
                     //Console.WriteLine();
                 }
                 //Console.WriteLine();
             }
+
             Console.ReadKey();
         }
 
